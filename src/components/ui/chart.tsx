@@ -1,15 +1,11 @@
-import * as React from 'react';
-import * as RechartsPrimitive from 'recharts';
-import {
-  NameType,
-  Payload,
-  ValueType,
-} from 'recharts/types/component/DefaultTooltipContent';
+import * as React from "react";
+// import * as RechartsPrimitive from "recharts"; // ❌ remove if unused
+// import { NameType, Payload, ValueType } from "recharts/types/component/DefaultTooltipContent"; // ❌ remove if unused
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 // Format: { THEME_NAME: CSS_SELECTOR }
-const THEMES = { light: '', dark: '.dark' } as const;
+const THEMES = { light: "", dark: ".dark" } as const;
 
 export type ChartConfig = {
   [k in string]: {
@@ -20,6 +16,16 @@ export type ChartConfig = {
     | { color?: never; theme: Record<keyof typeof THEMES, string> }
   );
 };
+
+// ✅ Dummy export so file isn't considered empty by TS
+export const chartConfigExample: ChartConfig = {
+  revenue: {
+    label: "Revenue",
+    icon: () => <span>💰</span>,
+    color: "#8884d8",
+  },
+};
+
 
 type ChartContextProps = {
   config: ChartConfig;
