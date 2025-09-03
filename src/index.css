@@ -28,10 +28,9 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -130,8 +129,38 @@ button:focus-visible {
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
   }
   body {
     @apply bg-background text-foreground;
+    font-size: 14px;
+  }
+  
+  @media (min-width: 640px) {
+    body {
+      font-size: 16px;
+    }
+  }
+  
+  /* Improve form input spacing on mobile */
+  .mobile-form-spacing {
+    @apply space-y-3;
+  }
+  
+  @media (min-width: 640px) {
+    .mobile-form-spacing {
+      @apply space-y-4;
+    }
+  }
+  
+  /* Better table responsiveness */
+  .responsive-table {
+    font-size: 12px;
+  }
+  
+  @media (min-width: 640px) {
+    .responsive-table {
+      font-size: 14px;
+    }
   }
 }

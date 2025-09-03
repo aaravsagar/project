@@ -50,42 +50,42 @@ export default function TeamDetailsModal({ registration, isOpen, onClose }: Team
   };
 
   const renderMemberCard = (member: TeamMember, role: string, index?: number) => (
-    <Card key={`${role}-${index || 0}`} className="mb-4">
+    <Card key={`${role}-${index || 0}`} className="mb-3 sm:mb-4">
       <CardHeader className="pb-3">
-        <CardTitle className="text-base flex items-center">
-          <User className="h-4 w-4 mr-2" />
+        <CardTitle className="text-sm sm:text-base flex items-center">
+          <User className="h-3 w-3 sm:h-4 sm:w-4 mr-2 flex-shrink-0" />
           {role} {index !== undefined && `${index + 2}`}
         </CardTitle>
       </CardHeader>
-      <CardContent className="pt-0">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+      <CardContent className="pt-0 p-3 sm:p-4 md:p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 text-xs sm:text-sm">
           <div>
             <span className="font-medium text-gray-600">Name:</span>
-            <p className="text-gray-900">{member.name}</p>
+            <p className="text-gray-900 truncate" title={member.name}>{member.name}</p>
           </div>
           <div>
             <span className="font-medium text-gray-600">Enrollment:</span>
-            <p className="text-gray-900 font-mono text-xs">{member.enrollmentNo}</p>
+            <p className="text-gray-900 font-mono text-xs break-all">{member.enrollmentNo}</p>
           </div>
           <div>
             <span className="font-medium text-gray-600">Contact:</span>
-            <p className="text-gray-900">{member.contact}</p>
+            <p className="text-gray-900 font-mono">{member.contact}</p>
           </div>
           <div>
             <span className="font-medium text-gray-600">Email:</span>
-            <p className="text-gray-900 break-all">{member.email}</p>
+            <p className="text-gray-900 break-all text-xs" title={member.email}>{member.email}</p>
           </div>
           <div>
             <span className="font-medium text-gray-600">Branch:</span>
-            <p className="text-gray-900">{member.branch}</p>
+            <p className="text-gray-900 truncate" title={member.branch}>{member.branch}</p>
           </div>
           <div>
             <span className="font-medium text-gray-600">Semester:</span>
             <p className="text-gray-900">Semester {member.semester}</p>
           </div>
-          <div className="md:col-span-2">
+          <div className="sm:col-span-2 lg:col-span-1">
             <span className="font-medium text-gray-600">Gender:</span>
-            <Badge variant="outline" className="ml-2">
+            <Badge variant="outline" className="ml-2 text-xs">
               {member.gender}
             </Badge>
           </div>
@@ -96,35 +96,35 @@ export default function TeamDetailsModal({ registration, isOpen, onClose }: Team
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto mx-2">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold flex items-center">
-            <Users className="h-5 w-5 mr-2" />
-            {registration.teamName}
+          <DialogTitle className="text-base sm:text-lg md:text-xl font-bold flex items-center">
+            <Users className="h-4 w-4 sm:h-5 sm:w-5 mr-2 flex-shrink-0" />
+            <span className="truncate">{registration.teamName}</span>
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* Team Overview */}
           <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
-            <CardContent className="p-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <CardContent className="p-3 sm:p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 md:gap-4 text-xs sm:text-sm">
                 <div className="flex items-center space-x-2">
-                  <MapPin className="h-4 w-4 text-blue-600" />
-                  <span><strong>PS Number:</strong> {registration.psNumber}</span>
+                  <MapPin className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600 flex-shrink-0" />
+                  <span className="truncate"><strong>PS:</strong> {registration.psNumber}</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Users className="h-4 w-4 text-green-600" />
-                  <span><strong>Female Members:</strong> {registration.teamStats.femaleMembers}/6</span>
+                  <Users className="h-3 w-3 sm:h-4 sm:w-4 text-green-600 flex-shrink-0" />
+                  <span className="truncate"><strong>Female:</strong> {registration.teamStats.femaleMembers}/6</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Calendar className="h-4 w-4 text-purple-600" />
-                  <span><strong>Submitted:</strong> {new Date(registration.submittedAt).toLocaleDateString()}</span>
+                  <Calendar className="h-3 w-3 sm:h-4 sm:w-4 text-purple-600 flex-shrink-0" />
+                  <span className="truncate"><strong>Date:</strong> {new Date(registration.submittedAt).toLocaleDateString()}</span>
                 </div>
               </div>
               
-              <div className="mt-4 flex flex-wrap items-center gap-2">
-                <span className="text-sm font-medium">National Willingness:</span>
+              <div className="mt-3 sm:mt-4 flex flex-wrap items-center gap-2">
+                <span className="text-xs sm:text-sm font-medium">National:</span>
                 <Badge className={getWillingnessColor(registration.willingness)}>
                   {registration.willingness}
                 </Badge>
@@ -132,22 +132,22 @@ export default function TeamDetailsModal({ registration, isOpen, onClose }: Team
 
               {/* Technical Details */}
               {(registration.ipAddress || registration.userAgent) && (
-                <div className="mt-4 pt-4 border-t border-blue-200">
-                  <h4 className="text-sm font-medium text-gray-700 mb-2 flex items-center">
-                    <Monitor className="h-4 w-4 mr-1" />
+                <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-blue-200">
+                  <h4 className="text-xs sm:text-sm font-medium text-gray-700 mb-2 flex items-center">
+                    <Monitor className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
                     Technical Details
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-gray-600">
+                  <div className="grid grid-cols-1 gap-2 text-xs text-gray-600">
                     {registration.ipAddress && (
                       <div className="flex items-center space-x-2">
                         <Globe className="h-3 w-3" />
-                        <span>IP: {registration.ipAddress}</span>
+                        <span className="truncate">IP: {registration.ipAddress}</span>
                       </div>
                     )}
                     {registration.userAgent && (
-                      <div className="flex items-start space-x-2">
+                      <div className="flex items-start space-x-2 max-w-full">
                         <Monitor className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                        <span className="break-all">{registration.userAgent}</span>
+                        <span className="break-all text-xs leading-tight">{registration.userAgent}</span>
                       </div>
                     )}
                   </div>
@@ -160,7 +160,7 @@ export default function TeamDetailsModal({ registration, isOpen, onClose }: Team
 
           {/* Team Leader */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-blue-900">Team Leader</h3>
+            <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-blue-900">Team Leader</h3>
             {renderMemberCard(registration.teamLeader, 'Team Leader')}
           </div>
 
@@ -168,7 +168,7 @@ export default function TeamDetailsModal({ registration, isOpen, onClose }: Team
 
           {/* Team Members */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 text-blue-900">Team Members</h3>
+            <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-blue-900">Team Members</h3>
             {registration.teamMembers
               .filter(member => member.name) // Only show filled members
               .map((member, index) => renderMemberCard(member, 'Member', index))
@@ -178,13 +178,14 @@ export default function TeamDetailsModal({ registration, isOpen, onClose }: Team
           {/* Branch Distribution */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Branch Distribution</CardTitle>
+              <CardTitle className="text-sm sm:text-base">Branch Distribution</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-3 sm:p-4 md:p-6">
               <div className="flex flex-wrap gap-2">
                 {Object.entries(registration.teamStats.branches).map(([branch, count]) => (
-                  <Badge key={branch} variant="outline" className="text-xs">
-                    {branch}: {count}
+                  <Badge key={branch} variant="outline" className="text-xs px-2 py-1">
+                    <span className="sm:hidden">{branch.split(' ')[0]}: {count}</span>
+                    <span className="hidden sm:inline">{branch}: {count}</span>
                   </Badge>
                 ))}
               </div>
@@ -194,4 +195,4 @@ export default function TeamDetailsModal({ registration, isOpen, onClose }: Team
       </DialogContent>
     </Dialog>
   );
-}
+} 

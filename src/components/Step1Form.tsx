@@ -30,50 +30,50 @@ export default function Step1Form({ data, updateData }: Step1FormProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Team Information */}
-      <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
         <div>
-          <Label htmlFor="teamName">Team Name *</Label>
+          <Label htmlFor="teamName" className="text-sm font-medium">Team Name *</Label>
           <Input
             id="teamName"
             value={data.teamName}
             onChange={(e) => updateData({ teamName: e.target.value })}
             placeholder="Enter unique team name"
-            className="mt-1"
+            className="mt-1 h-9 sm:h-10"
           />
         </div>
         
         <div>
-          <Label htmlFor="psNumber">Problem Statement Number *</Label>
+          <Label htmlFor="psNumber" className="text-sm font-medium">Problem Statement Number *</Label>
           <Input
             id="psNumber"
             value={data.psNumber}
             onChange={(e) => updateData({ psNumber: e.target.value })}
             placeholder="e.g., PS001"
-            className="mt-1"
+            className="mt-1 h-9 sm:h-10"
           />
         </div>
       </div>
 
       {/* Team Leader Details */}
       <div>
-        <h3 className="text-base md:text-lg font-semibold mb-4 text-blue-900">Team Leader Details</h3>
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+        <h3 className="text-sm sm:text-base md:text-lg font-semibold mb-3 sm:mb-4 text-blue-900">Team Leader Details</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4">
           <div>
-            <Label htmlFor="leaderName">Full Name *</Label>
+            <Label htmlFor="leaderName" className="text-sm font-medium">Full Name *</Label>
             <Input
               id="leaderName"
               value={data.teamLeader.name}
               onChange={(e) => updateTeamLeader('name', e.target.value)}
               placeholder="Enter full name"
-              className="mt-1"
+              className="mt-1 h-9 sm:h-10"
             />
           </div>
 
           <div>
-            <Label htmlFor="leaderEnrollment">Enrollment Number *</Label>
-            <p className="text-xs text-gray-500 mt-1 mb-1">
+            <Label htmlFor="leaderEnrollment" className="text-sm font-medium">Enrollment Number *</Label>
+            <p className="text-xs text-gray-500 mt-1 mb-1 leading-tight">
               Format: 244510316085 (1st sem students use roll number)
             </p>
             <Input
@@ -81,28 +81,28 @@ export default function Step1Form({ data, updateData }: Step1FormProps) {
               value={data.teamLeader.enrollmentNo}
               onChange={(e) => updateTeamLeader('enrollmentNo', e.target.value)}
               placeholder="e.g., 244510316085"
-              className="mt-1"
+              className="mt-1 h-9 sm:h-10"
             />
           </div>
 
           <div>
-            <Label htmlFor="leaderContact">Contact Number *</Label>
+            <Label htmlFor="leaderContact" className="text-sm font-medium">Contact Number *</Label>
             <Input
               id="leaderContact"
               value={data.teamLeader.contact}
               onChange={(e) => updateTeamLeader('contact', e.target.value)}
               placeholder="10-digit mobile number"
-              className="mt-1"
+              className="mt-1 h-9 sm:h-10"
             />
           </div>
 
           <div>
-            <Label htmlFor="leaderGender">Gender *</Label>
+            <Label htmlFor="leaderGender" className="text-sm font-medium">Gender *</Label>
             <Select
               value={data.teamLeader.gender}
               onValueChange={(value) => updateTeamLeader('gender', value)}
             >
-              <SelectTrigger className="mt-1">
+              <SelectTrigger className="mt-1 h-9 sm:h-10">
                 <SelectValue placeholder="Select gender" />
               </SelectTrigger>
               <SelectContent>
@@ -114,24 +114,24 @@ export default function Step1Form({ data, updateData }: Step1FormProps) {
           </div>
 
           <div>
-            <Label htmlFor="leaderEmail">Email Address *</Label>
+            <Label htmlFor="leaderEmail" className="text-sm font-medium">Email Address *</Label>
             <Input
               id="leaderEmail"
               type="email"
               value={data.teamLeader.email}
               onChange={(e) => updateTeamLeader('email', e.target.value)}
               placeholder="email@example.com"
-              className="mt-1"
+              className="mt-1 h-9 sm:h-10"
             />
           </div>
 
           <div>
-            <Label htmlFor="leaderBranch">Branch *</Label>
+            <Label htmlFor="leaderBranch" className="text-sm font-medium">Branch *</Label>
             <Select
               value={data.teamLeader.branch}
               onValueChange={(value) => updateTeamLeader('branch', value)}
             >
-              <SelectTrigger className="mt-1">
+              <SelectTrigger className="mt-1 h-9 sm:h-10">
                 <SelectValue placeholder="Select branch" />
               </SelectTrigger>
               <SelectContent>
@@ -145,12 +145,12 @@ export default function Step1Form({ data, updateData }: Step1FormProps) {
           </div>
 
           <div>
-            <Label htmlFor="leaderSemester">Current Semester *</Label>
+            <Label htmlFor="leaderSemester" className="text-sm font-medium">Current Semester *</Label>
             <Select
               value={data.teamLeader.semester}
               onValueChange={(value) => updateTeamLeader('semester', value)}
             >
-              <SelectTrigger className="mt-1">
+              <SelectTrigger className="mt-1 h-9 sm:h-10">
                 <SelectValue placeholder="Select semester" />
               </SelectTrigger>
               <SelectContent>

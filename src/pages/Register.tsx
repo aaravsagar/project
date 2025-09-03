@@ -174,27 +174,27 @@ export default function Register() {
   const progress = (currentStep / 3) * 100;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-4 md:py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-2 sm:py-4 md:py-8">
+      <div className="w-full max-w-6xl mx-auto px-2 sm:px-4 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-6 md:mb-8">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
+        <div className="text-center mb-4 sm:mb-6 md:mb-8">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
             SIH 2025 Team Registration
           </h1>
-          <p className="text-sm md:text-base text-gray-600">Complete all steps to register your team</p>
+          <p className="text-xs sm:text-sm md:text-base text-gray-600 px-2">Complete all steps to register your team</p>
         </div>
 
         {/* Progress Indicator */}
-        <Card className="mb-6 md:mb-8">
-          <CardContent className="p-4 md:p-6">
-            <div className="flex items-center justify-between mb-4 overflow-x-auto">
+        <Card className="mb-4 sm:mb-6 md:mb-8">
+          <CardContent className="p-3 sm:p-4 md:p-6">
+            <div className="flex items-center justify-between mb-3 md:mb-4 overflow-x-auto min-w-0">
               {stepTitles.map((title, index) => (
                 <div 
                   key={index}
-                  className={`flex items-center min-w-0 ${index < stepTitles.length - 1 ? 'flex-1' : ''}`}
+                  className={`flex items-center min-w-0 flex-shrink-0 ${index < stepTitles.length - 1 ? 'flex-1' : ''}`}
                 >
                   <div 
-                    className={`w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-xs md:text-sm font-medium flex-shrink-0 ${
+                    className={`w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0 ${
                       currentStep > index + 1 
                         ? 'bg-green-500 text-white' 
                         : currentStep === index + 1 
@@ -204,13 +204,13 @@ export default function Register() {
                   >
                     {index + 1}
                   </div>
-                  <span className={`ml-1 md:ml-2 text-xs md:text-sm font-medium truncate ${
+                  <span className={`ml-1 sm:ml-2 text-xs sm:text-sm font-medium truncate ${
                     currentStep >= index + 1 ? 'text-gray-900' : 'text-gray-500'
                   }`}>
                     {title}
                   </span>
                   {index < stepTitles.length - 1 && (
-                    <div className="flex-1 mx-2 md:mx-4 min-w-[20px]">
+                    <div className="flex-1 mx-1 sm:mx-2 md:mx-4 min-w-[10px] sm:min-w-[20px]">
                       <div className={`h-1 rounded ${
                         currentStep > index + 1 ? 'bg-green-500' : 'bg-gray-200'
                       }`}></div>
@@ -226,11 +226,11 @@ export default function Register() {
         {/* Form Steps */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg md:text-xl">
+            <CardTitle className="text-base sm:text-lg md:text-xl">
               Step {currentStep}: {stepTitles[currentStep - 1]}
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-4 md:p-6">
+          <CardContent className="p-3 sm:p-4 md:p-6">
             {currentStep === 1 && (
               <Step1Form 
                 data={formData} 
@@ -251,12 +251,12 @@ export default function Register() {
             )}
 
             {/* Navigation Buttons */}
-            <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6 md:mt-8 pt-4 md:pt-6 border-t">
+            <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4 mt-4 sm:mt-6 md:mt-8 pt-3 sm:pt-4 md:pt-6 border-t">
               <Button
                 variant="outline"
                 onClick={prevStep}
                 disabled={currentStep === 1}
-                className="flex items-center justify-center space-x-2 w-full sm:w-auto"
+                className="flex items-center justify-center space-x-2 w-full sm:w-auto order-2 sm:order-1"
               >
                 <ChevronLeft className="h-4 w-4" />
                 <span>Previous</span>
@@ -265,7 +265,7 @@ export default function Register() {
               {currentStep < 3 ? (
                 <Button
                   onClick={nextStep}
-                  className="flex items-center justify-center space-x-2 w-full sm:w-auto"
+                  className="flex items-center justify-center space-x-2 w-full sm:w-auto order-1 sm:order-2"
                 >
                   <span>Next</span>
                   <ChevronRight className="h-4 w-4" />
@@ -274,7 +274,7 @@ export default function Register() {
                 <Button
                   onClick={handleSubmit}
                   disabled={isSubmitting}
-                  className="bg-green-600 hover:bg-green-700 w-full sm:w-auto"
+                  className="bg-green-600 hover:bg-green-700 w-full sm:w-auto order-1 sm:order-2"
                 >
                   {isSubmitting ? 'Submitting...' : 'Submit Registration'}
                 </Button>
