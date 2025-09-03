@@ -1,6 +1,9 @@
 import * as React from "react";
-// import * as RechartsPrimitive from "recharts"; // ❌ remove if unused
-// import { NameType, Payload, ValueType } from "recharts/types/component/DefaultTooltipContent"; // ❌ remove if unused
+import {
+  NameType,
+  Payload,
+  ValueType,
+} from "recharts/types/component/DefaultTooltipContent";
 
 import { cn } from "@/lib/utils";
 
@@ -17,7 +20,7 @@ export type ChartConfig = {
   );
 };
 
-// ✅ Dummy export so file isn't considered empty by TS
+// ✅ Example dummy config so the type is actually used (optional)
 export const chartConfigExample: ChartConfig = {
   revenue: {
     label: "Revenue",
