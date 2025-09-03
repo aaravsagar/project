@@ -36,7 +36,7 @@ export default function Step2Form({ data, updateData }: Step2FormProps) {
     return (
       <Card key={index} className="mb-6">
         <CardHeader>
-          <CardTitle className="text-lg">Team Member {index + 1}</CardTitle>
+          <CardTitle className="text-lg">Team Member {index + 2}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 gap-4">
