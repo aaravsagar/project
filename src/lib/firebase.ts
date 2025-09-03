@@ -43,10 +43,22 @@ export async function checkTeamNameExists(teamName: string): Promise<boolean> {
  */
 export async function submitRegistration(registrationData: RegistrationData): Promise<string> {
   try {
+    // Get user's IP address
+    let ipAddress = 'Unknown';
+    try {
+      const ipResponse = await fetch('https://api.ipify.org?format=json');
+      const ipData = await ipResponse.json();
+      ipAddress = ipData.ip;
+    } catch (ipError) {
+      console.warn('Could not fetch IP address:', ipError);
+    }
+
     // Add timestamp and format data for storage
     const submissionData = {
       ...registrationData,
       submittedAt: new Date().toISOString(),
+      ipAddress,
+      userAgent: navigator.userAgent,
       status: 'pending',
       // Calculate team statistics
       teamStats: {

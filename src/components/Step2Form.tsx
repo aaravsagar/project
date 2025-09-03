@@ -34,12 +34,12 @@ export default function Step2Form({ data, updateData }: Step2FormProps) {
     const member = data.teamMembers[index];
     
     return (
-      <Card key={index} className="mb-6">
+      <Card key={index} className="mb-4 md:mb-6">
         <CardHeader>
-          <CardTitle className="text-lg">Team Member {index + 2}</CardTitle>
+          <CardTitle className="text-base md:text-lg">Team Member {index + 2}</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid md:grid-cols-2 gap-4">
+        <CardContent className="p-4 md:p-6">
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             <div>
               <Label htmlFor={`member${index}Name`}>Full Name *</Label>
               <Input
@@ -53,7 +53,7 @@ export default function Step2Form({ data, updateData }: Step2FormProps) {
 
             <div>
               <Label htmlFor={`member${index}Enrollment`}>Enrollment Number *</Label>
-              <p className="text-xs text-gray-500 mt-1 mb-1">
+              <p className="text-xs text-gray-500 mt-1 mb-1 leading-tight">
                 Format: 244510316085 (1st sem students use roll number)
               </p>
               <Input
@@ -150,8 +150,8 @@ export default function Step2Form({ data, updateData }: Step2FormProps) {
 
   return (
     <div className="space-y-6">
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-        <p className="text-sm text-blue-800">
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 md:p-4 mb-6">
+        <p className="text-xs md:text-sm text-blue-800">
           <strong>Important:</strong> Please fill details for all 5 team members. 
           At least 1 female member is compulsory, 2 are recommended.
         </p>

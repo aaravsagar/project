@@ -32,7 +32,7 @@ export default function Step1Form({ data, updateData }: Step1FormProps) {
   return (
     <div className="space-y-6">
       {/* Team Information */}
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <div>
           <Label htmlFor="teamName">Team Name *</Label>
           <Input
@@ -58,8 +58,8 @@ export default function Step1Form({ data, updateData }: Step1FormProps) {
 
       {/* Team Leader Details */}
       <div>
-        <h3 className="text-lg font-semibold mb-4 text-blue-900">Team Leader Details</h3>
-        <div className="grid md:grid-cols-2 gap-4">
+        <h3 className="text-base md:text-lg font-semibold mb-4 text-blue-900">Team Leader Details</h3>
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <Label htmlFor="leaderName">Full Name *</Label>
             <Input

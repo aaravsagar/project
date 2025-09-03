@@ -24,6 +24,8 @@ interface Registration {
   }>;
   willingness: string;
   submittedAt: string;
+  ipAddress?: string;
+  userAgent?: string;
   teamStats: {
     totalMembers: number;
     femaleMembers: number;
@@ -51,10 +53,13 @@ export async function exportToExcel(registrations: Registration[]): Promise<void
       'Leader Email': reg.teamLeader.email,
       'Leader Branch': reg.teamLeader.branch,
       'Leader Semester': reg.teamLeader.semester,
+      'Leader Gender': reg.teamLeader.gender,
       'Female Members': reg.teamStats.femaleMembers,
       'National Willingness': reg.willingness,
+      'IP Address': reg.ipAddress || 'Unknown',
       'Submission Date': new Date(reg.submittedAt).toLocaleDateString(),
-      'Submission Time': new Date(reg.submittedAt).toLocaleTimeString()
+      'Submission Time': new Date(reg.submittedAt).toLocaleTimeString(),
+      'User Agent': reg.userAgent || 'Unknown'
     }));
 
     const teamSummarySheet = XLSX.utils.json_to_sheet(teamSummaryData);
@@ -81,7 +86,7 @@ export async function exportToExcel(registrations: Registration[]): Promise<void
 
       // Add team members
       reg.teamMembers.forEach((member, index) => {
-        if (member.name) { // Only add filled members
+        if (member.name && member.name.trim()) { // Only add filled members
           allMembersData.push({
             'Team Name': reg.teamName,
             'PS Number': reg.psNumber,
@@ -93,6 +98,7 @@ export async function exportToExcel(registrations: Registration[]): Promise<void
             'Gender': member.gender,
             'Branch': member.branch,
             'Semester': member.semester,
+            'IP Address': reg.ipAddress || 'Unknown',
             'Submission Date': new Date(reg.submittedAt).toLocaleDateString()
           });
         }
@@ -109,7 +115,7 @@ export async function exportToExcel(registrations: Registration[]): Promise<void
     let totalMale = 0;
 
     registrations.forEach((reg) => {
-      const allMembers = [reg.teamLeader, ...reg.teamMembers.filter(m => m.name)];
+      const allMembers = [reg.teamLeader, ...reg.teamMembers.filter(m => m.name && m.name.trim())];
       
       allMembers.forEach((member) => {
         // Branch statistics

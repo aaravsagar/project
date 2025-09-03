@@ -25,7 +25,7 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-background flex flex-col">
+      <div className="min-h-screen bg-background flex flex-col relative">
         <Header />
         <main className="flex-1">
           <Routes>
@@ -34,26 +34,26 @@ function App() {
             <Route path="/admin" element={<Admin />} />
           </Routes>
           {showAdmin && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-              <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+              <div className="bg-white rounded-lg p-4 md:p-6 max-w-md w-full">
                 <h3 className="text-lg font-semibold mb-4">Admin Access</h3>
-                <p className="text-gray-600 mb-4">
+                <p className="text-sm md:text-base text-gray-600 mb-4">
                   You've accessed the admin panel. Click below to view submissions.
                 </p>
-                <div className="flex space-x-3">
+                <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                   <Button 
                     onClick={() => {
                       setShowAdmin(false);
                       window.location.href = '/admin';
                     }}
-                    className="flex-1"
+                    className="w-full sm:flex-1"
                   >
                     Go to Admin
                   </Button>
                   <Button 
                     variant="outline" 
                     onClick={() => setShowAdmin(false)}
-                    className="flex-1"
+                    className="w-full sm:flex-1"
                   >
                     Cancel
                   </Button>
