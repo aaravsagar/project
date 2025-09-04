@@ -2,7 +2,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { User, Users, MapPin, Phone, Mail, Calendar, Globe, Monitor } from 'lucide-react';
+import { User, Users, MapPin, Calendar, Globe, Monitor } from 'lucide-react';
+
 
 interface TeamMember {
   name: string;
