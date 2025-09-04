@@ -49,6 +49,7 @@ export default function Register() {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<RegistrationData>(initialData);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [adminMode, setAdminMode] = useState(false);
 
   // Load data from localStorage on mount
   useEffect(() => {
@@ -62,6 +63,26 @@ export default function Register() {
     }
   }, []);
 
+  // F7 key listener for admin bypass
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'F7') {
+        event.preventDefault();
+        setAdminMode(prev => {
+          const newMode = !prev;
+          if (newMode) {
+            toast.success('Admin mode activated - Form validation bypassed');
+          } else {
+            toast.info('Admin mode deactivated - Normal validation restored');
+          }
+          return newMode;
+        });
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
   // Save to localStorage whenever formData changes
   useEffect(() => {
     localStorage.setItem('sih-registration-data', JSON.stringify(formData));
@@ -72,6 +93,8 @@ export default function Register() {
   };
 
   const validateStep1 = () => {
+    if (adminMode) return true;
+    
     const { teamName, psNumber, teamLeader } = formData;
     if (!teamName.trim() || !psNumber.trim()) return false;
     
@@ -81,6 +104,8 @@ export default function Register() {
   };
 
   const validateStep2 = () => {
+    if (adminMode) return true;
+    
     const filledMembers = formData.teamMembers.filter(member => 
       member.name && member.enrollmentNo && member.contact && 
       member.gender && member.email && member.branch && member.semester
@@ -108,6 +133,7 @@ export default function Register() {
   };
 
   const validateStep3 = () => {
+    if (adminMode) return true;
     return formData.willingness !== '';
   };
 
@@ -118,7 +144,7 @@ export default function Register() {
     }
 
     // Check team name uniqueness before moving to step 2
-    if (currentStep === 1) {
+    if (currentStep === 1 && !adminMode) {
       try {
         const exists = await checkTeamNameExists(formData.teamName);
         if (exists) {
@@ -147,6 +173,31 @@ export default function Register() {
     }
   };
 
+  const createNullRegistration = (): RegistrationData => {
+    return {
+      teamName: formData.teamName || 'Admin Test Entry',
+      psNumber: formData.psNumber || 'ADMIN-NULL',
+      teamLeader: {
+        name: 'Admin Entry',
+        enrollmentNo: 'NULL',
+        contact: 'NULL',
+        gender: 'Other',
+        email: 'admin@null.com',
+        branch: 'Computer Engineering',
+        semester: '1'
+      },
+      teamMembers: Array(5).fill(null).map(() => ({
+        name: 'NULL',
+        enrollmentNo: 'NULL',
+        contact: 'NULL',
+        gender: 'Other',
+        email: 'null@null.com',
+        branch: 'Computer Engineering',
+        semester: '1'
+      })),
+      willingness: 'No'
+    };
+  };
   const handleSubmit = async () => {
     if (!validateStep3()) {
       toast.error('Please select your willingness to participate');
@@ -155,13 +206,20 @@ export default function Register() {
 
     setIsSubmitting(true);
     try {
-      await submitRegistration(formData);
+      const dataToSubmit = adminMode ? createNullRegistration() : formData;
+      
+      if (adminMode) {
+        toast.info('Submitting with admin bypass - null data will be used for empty fields');
+      }
+      
+      await submitRegistration(dataToSubmit);
       toast.success('Registration submitted successfully!');
       
       // Clear localStorage after successful submission
       localStorage.removeItem('sih-registration-data');
       setFormData(initialData);
       setCurrentStep(1);
+      setAdminMode(false);
     } catch (error) {
       console.error('Submission error:', error);
       toast.error('Failed to submit registration. Please try again.');
@@ -180,8 +238,20 @@ export default function Register() {
         <div className="text-center mb-4 sm:mb-6 md:mb-8">
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
             SIH 2025 Team Registration
+            {adminMode && (
+              <span className="block text-sm sm:text-base text-red-600 font-normal mt-1">
+                🔓 Admin Mode Active - Validation Bypassed
+              </span>
+            )}
           </h1>
           <p className="text-xs sm:text-sm md:text-base text-gray-600 px-2">Complete all steps to register your team</p>
+          {adminMode && (
+            <div className="mt-2 p-2 bg-red-50 border border-red-200 rounded-lg max-w-md mx-auto">
+              <p className="text-xs text-red-700">
+                Press F7 again to disable admin mode
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Progress Indicator */}
@@ -228,9 +298,22 @@ export default function Register() {
           <CardHeader>
             <CardTitle className="text-base sm:text-lg md:text-xl">
               Step {currentStep}: {stepTitles[currentStep - 1]}
+              {adminMode && (
+                <span className="text-sm font-normal text-red-600 ml-2">
+                  (Admin Mode)
+                </span>
+              )}
             </CardTitle>
           </CardHeader>
           <CardContent className="p-3 sm:p-4 md:p-6">
+            {adminMode && (
+              <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <p className="text-sm text-yellow-800">
+                  <strong>Admin Mode:</strong> Form validation is disabled. Empty fields will be submitted as null values.
+                </p>
+              </div>
+            )}
+            
             {currentStep === 1 && (
               <Step1Form 
                 data={formData} 
@@ -274,14 +357,29 @@ export default function Register() {
                 <Button
                   onClick={handleSubmit}
                   disabled={isSubmitting}
-                  className="bg-green-600 hover:bg-green-700 w-full sm:w-auto order-1 sm:order-2"
+                  className={`${adminMode ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'} w-full sm:w-auto order-1 sm:order-2`}
                 >
-                  {isSubmitting ? 'Submitting...' : 'Submit Registration'}
+                  {isSubmitting ? 'Submitting...' : adminMode ? 'Submit (Admin Mode)' : 'Submit Registration'}
                 </Button>
               )}
             </div>
           </CardContent>
         </Card>
+        
+        {/* Admin Mode Instructions */}
+        {adminMode && (
+          <Card className="mt-4 border-red-200 bg-red-50">
+            <CardContent className="p-3 sm:p-4">
+              <h3 className="text-sm font-semibold text-red-800 mb-2">Admin Mode Instructions</h3>
+              <ul className="text-xs text-red-700 space-y-1">
+                <li>• All form validation is bypassed</li>
+                <li>• Empty fields will be submitted as null/default values</li>
+                <li>• Team name uniqueness check is disabled</li>
+                <li>• Press F7 again to disable admin mode</li>
+              </ul>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
